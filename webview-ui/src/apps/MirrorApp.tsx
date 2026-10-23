@@ -10,6 +10,7 @@ import {
 } from '../hooks';
 import type { ConnectionStatus, ExtensionMessage, DeviceListItem, ScrollEventData } from '../types';
 import { copyPngToClipboard } from '../utils/clipboardImage';
+import { DEFAULT_VIDEO_CONTAINER_COLOR } from '../constants';
 import '../styles/toolbar.css';
 import '../styles/settingsPanel.css';
 import '../styles/videoContainer.css';
@@ -504,8 +505,8 @@ export default function MirrorApp() {
 
         if (showDeviceSkin || !isConnected) {
             // Use gradient when device skin is on OR when not connected
-            const color1 = settings.gradientColor1 || 'rgba(238, 174, 202, 1)';
-            const color2 = settings.gradientColor2 || 'rgba(148, 187, 233, 1)';
+            const color1 = settings.gradientColor1 || DEFAULT_VIDEO_CONTAINER_COLOR;
+            const color2 = settings.gradientColor2 || DEFAULT_VIDEO_CONTAINER_COLOR;
             const gradient = `radial-gradient(circle, ${color1} 0%, ${color2} 100%)`;
             document.documentElement.style.setProperty('--video-container-bg-gradient', gradient);
         } else {

@@ -21,6 +21,7 @@ import {
     RotateCcw,
     AlertTriangle,
 } from 'lucide-react';
+import { DEFAULT_VIDEO_CONTAINER_COLOR } from '../constants';
 
 interface SettingsPanelProps {
     onClose: () => void;
@@ -52,8 +53,8 @@ export function SettingsPanel({
     onClose,
     showDeviceSkin = true,
     onShowDeviceSkinChange,
-    gradientColor1 = 'rgba(238, 174, 202, 1)',
-    gradientColor2 = 'rgba(148, 187, 233, 1)',
+    gradientColor1 = DEFAULT_VIDEO_CONTAINER_COLOR,
+    gradientColor2 = DEFAULT_VIDEO_CONTAINER_COLOR,
     onGradientColor1Change,
     onGradientColor2Change,
     deviceSkinColor = '#1a1a1a',
@@ -660,7 +661,7 @@ export function SettingsPanel({
                                                     .padStart(2, '0');
                                                 return `#${r}${g}${b}`;
                                             }
-                                            return '#eeaeca';
+                                            return '#f3f4f6';
                                         })()}
                                         onChange={(e) => {
                                             const newColor = e.target.value;
@@ -706,7 +707,7 @@ export function SettingsPanel({
                                             color: 'var(--vsc-text)',
                                             fontSize: '11px',
                                         }}
-                                        placeholder="rgba(238, 174, 202, 1)"
+                                        placeholder="rgba(243, 244, 246, 1)"
                                     />
                                 </div>
                             </div>
@@ -758,7 +759,7 @@ export function SettingsPanel({
                                                     .padStart(2, '0');
                                                 return `#${r}${g}${b}`;
                                             }
-                                            return '#94bbe9';
+                                            return '#f3f4f6';
                                         })()}
                                         onChange={(e) => {
                                             const newColor = e.target.value;
@@ -804,7 +805,7 @@ export function SettingsPanel({
                                             color: 'var(--vsc-text)',
                                             fontSize: '11px',
                                         }}
-                                        placeholder="rgba(148, 187, 233, 1)"
+                                        placeholder="rgba(243, 244, 246, 1)"
                                     />
                                 </div>
                             </div>

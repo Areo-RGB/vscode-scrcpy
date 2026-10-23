@@ -1,5 +1,6 @@
 import { useState, useEffect, useCallback } from 'react';
 import { vscode } from '../vscode';
+import { DEFAULT_VIDEO_CONTAINER_COLOR } from '../constants';
 import { DEFAULT_ZOOM, clampZoom } from './useZoom';
 
 interface AppSettings {
@@ -21,8 +22,8 @@ interface AppSettings {
 }
 
 const DEFAULT_SETTINGS: AppSettings = {
-    gradientColor1: 'rgba(238, 174, 202, 1)',
-    gradientColor2: 'rgba(148, 187, 233, 1)',
+    gradientColor1: DEFAULT_VIDEO_CONTAINER_COLOR,
+    gradientColor2: DEFAULT_VIDEO_CONTAINER_COLOR,
     deviceSkinColor: '#1a1a1a',
     showDeviceSkin: false,
     toolbarAtBottom: true,
@@ -39,6 +40,8 @@ const DEFAULT_SETTINGS: AppSettings = {
 };
 
 const STORAGE_KEY = 'scrcpy-app-settings';
+const LEGACY_GRADIENT_COLOR_1 = 'rgba(238, 174, 202, 1)';
+const LEGACY_GRADIENT_COLOR_2 = 'rgba(148, 187, 233, 1)';
 
 export function useSettingsStorage() {
     const [settings, setSettings] = useState<AppSettings>(DEFAULT_SETTINGS);
@@ -53,6 +56,16 @@ export function useSettingsStorage() {
 
                 // Migrate/validate settings - reset to defaults if values are invalid
                 const migratedSettings = { ...DEFAULT_SETTINGS, ...loadedSettings };
+
+                // Replace the previous built-in lavender/blue background, while
+                // preserving any custom colors the user selected.
+                if (
+                    migratedSettings.gradientColor1 === LEGACY_GRADIENT_COLOR_1 &&
+                    migratedSettings.gradientColor2 === LEGACY_GRADIENT_COLOR_2
+                ) {
+                    migratedSettings.gradientColor1 = DEFAULT_VIDEO_CONTAINER_COLOR;
+                    migratedSettings.gradientColor2 = DEFAULT_VIDEO_CONTAINER_COLOR;
+                }
 
                 // Validate quality (must be 0 for native resolution, or >= 720)
                 const qualityNum = parseInt(migratedSettings.quality || '0', 10);
